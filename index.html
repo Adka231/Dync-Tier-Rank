@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MCTIERS - Cross-Platform Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=500;600;700;800&family=Inter:wght=400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=500;600;700;800&family=Inter:wght=400;500;600;700;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { 
             background: radial-gradient(120% 120% at 50% 0%, #0d1326 0%, #04060a 100%);
@@ -43,7 +43,7 @@
         /* Ultra Visual Tier Lighting Configurations */
         .card-top-1 { 
             background: linear-gradient(135deg, rgba(250, 204, 21, 0.08) 0%, rgba(13, 20, 38, 0.15) 100%); 
-            border: 1px solid rgba(250, 204, 21, 0.35) !important;
+            border: 1px solid rgba(253, 224, 71, 0.75) !important;
             box-shadow: inset 0 1px 2px rgba(250, 204, 21, 0.2), 0 0 30px rgba(234, 179, 8, 0.03);
         }
         .card-top-1:hover { box-shadow: 0 25px 50px -10px rgba(234, 179, 8, 0.3), inset 0 1px 2px rgba(250, 204, 21, 0.3); }
@@ -52,7 +52,7 @@
 
         .card-top-2 { 
             background: linear-gradient(135deg, rgba(148, 163, 184, 0.07) 0%, rgba(13, 20, 38, 0.15) 100%); 
-            border: 1px solid rgba(148, 163, 184, 0.35) !important;
+            border: 1px solid rgba(226, 232, 240, 0.7) !important;
             box-shadow: inset 0 1px 2px rgba(241, 245, 249, 0.15);
         }
         .card-top-2:hover { box-shadow: 0 25px 50px -10px rgba(148, 163, 184, 0.22); }
@@ -84,14 +84,24 @@
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.75), 0 0 30px rgba(59, 130, 246, 0.1);
         }
 
-        /* Tactically Segmented Capsule Grids */
-        .tier-capsule {
-            display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 8px 12px; border-radius: 14px; min-width: 62px; 
-            background: rgba(4, 6, 11, 0.7); border: 1px solid;
-            transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+        /* Tactically Segmented Capsule Grids -> Circular Tier Badges (mctiers.com style) */
+        .tier-badge-wrap { display: inline-flex; flex-direction: column; align-items: center; min-width: 50px; font-family: 'Inter', sans-serif; }
+        .tier-badge-circle {
+            width: 46px; height: 46px; border-radius: 9999px; display: flex; align-items: center; justify-content: center;
+            background: #05070d; border: 2px solid; transition: all 0.25s cubic-bezier(0.2, 1, 0.2, 1);
+            flex-shrink: 0; position: relative; z-index: 2; margin-bottom: -14px;
         }
-        .tier-capsule:hover { background: rgba(4, 6, 11, 0.95); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.5); }
+        .tier-badge-wrap:hover .tier-badge-circle { transform: translateY(-2px) scale(1.05); }
+        .tier-badge-circle img { width: 23px; height: 23px; object-fit: contain; }
+        .tier-badge-pill {
+            padding: 11px 7px 3px; border-radius: 10px; font-weight: 900; font-size: 10px;
+            letter-spacing: 0.01em; text-align: center; width: 100%; min-width: 42px;
+        }
+        .tier-badge-name { font-size: 8px; opacity: 0.4; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 3px; }
+        .tier-badge-wrap-profile { max-width: 58px; margin: 0 auto; }
+        .tier-badge-wrap-profile .tier-badge-pill { padding: 9px 5px 3px; font-size: 9px; border-radius: 9px; min-width: 38px; }
+        .tier-badge-wrap-profile .tier-badge-circle { width: 40px; height: 40px; margin-bottom: -12px; }
+        .tier-badge-wrap-profile .tier-badge-circle img { width: 20px; height: 20px; }
         
         /* UPGRADED: High Skill Radiance for Tier 1 & Tier 2 */
         .t1-theme { 
@@ -152,13 +162,14 @@
             background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(20px);
             border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.06);
             display: flex; flex-direction: column; max-height: 78vh;
+            font-family: 'Inter', sans-serif;
         }
         .tier-col-header {
             display: flex; align-items: center; gap: 8px; padding: 14px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-weight: 900;
             font-size: 0.8rem; letter-spacing: 0.02em; flex-shrink: 0; border-radius: 20px 20px 0 0;
         }
-        .tier-col-body { overflow-y: auto; padding: 6px; flex: 1; }
+        .tier-col-body { overflow-y: auto; padding: 6px; flex: 1; min-height: 12px; }
         .tier-col-body::-webkit-scrollbar { width: 4px; }
         .tier-col-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
         .tier-row {
@@ -173,6 +184,13 @@
         .arrow-ht span { color: #fbbf24; }
         .arrow-lt span { color: #64748b; }
         .tier-empty { padding: 24px 16px; text-align: center; color: #475569; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+        /* Tab Switch Transition */
+        @keyframes tabFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-fade-in { animation: tabFadeIn 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -183,7 +201,7 @@
         <div class="flex items-center justify-between mb-8">
             <div>
                 <h1 class="text-3xl font-black tracking-tight text-white bg-clip-text bg-gradient-to-r from-white via-white to-slate-400">MCTIERS</h1>
-                <p class="text-[10px] font-extrabold text-blue-500/80 uppercase tracking-widest mt-1.5 pl-0.5">Database Tracking System</p>
+                <p class="text-[10px] font-extrabold text-blue-500/80 uppercase tracking-widest mt-1.5 pl-0.5" style="font-family: 'Roboto', sans-serif; font-weight: 700;">Ranked Players MCPVP</p>
             </div>
             <button onclick="openOthersModal()" class="group flex items-center gap-2 bg-slate-900/90 hover:bg-blue-600 border border-white/[0.06] hover:border-blue-400 px-4 py-2 rounded-xl shadow-lg backdrop-blur transition-all duration-300 active:scale-95">
                 <span class="text-[11px] font-black uppercase tracking-wider text-blue-400 group-hover:text-white">Others</span>
@@ -291,14 +309,62 @@
             image.src = `https://api.dicebear.com/7.x/identicon/svg?seed=${encodeURIComponent(image.dataset.name)}`;
         }
 
+        const TIER_STYLES = {
+            1: { ring: '#d4af37', text: '#ffdd66', pillBg: 'rgba(212,175,55,0.38)', glow: '0 0 16px rgba(255,221,102,0.6)' },
+            2: { ring: '#9aa7bb', text: '#eef4fb', pillBg: 'rgba(154,167,187,0.32)', glow: '0 0 14px rgba(238,244,251,0.45)' },
+            3: { ring: '#a15f38', text: '#f0a875', pillBg: 'rgba(161,95,56,0.35)', glow: '0 0 14px rgba(240,168,117,0.5)' },
+            4: { ring: '#564d6e', text: '#b7a8d6', pillBg: 'rgba(86,77,110,0.40)', glow: '0 0 12px rgba(183,168,214,0.35)' },
+            5: { ring: '#2a2c3a', text: '#948fa8', pillBg: 'rgba(42,44,58,0.55)', glow: 'none' }
+        };
+
+        function tierColor(level) {
+            return (TIER_STYLES[level] || TIER_STYLES[5]).ring;
+        }
+
+        function lightenHex(hex, amt) {
+            const n = parseInt(hex.replace('#', ''), 16);
+            const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+            const lr = Math.min(255, Math.round(r + (255 - r) * amt));
+            const lg = Math.min(255, Math.round(g + (255 - g) * amt));
+            const lb = Math.min(255, Math.round(b + (255 - b) * amt));
+            return `rgb(${lr}, ${lg}, ${lb})`;
+        }
+
+        function tierStyleFor(level, prefix) {
+            const base = TIER_STYLES[level] || TIER_STYLES[5];
+            if (prefix !== 'HT' || level === '5' || level === 5) return base;
+            return {
+                ring: lightenHex(base.ring, 0.16),
+                text: lightenHex(base.text, 0.12),
+                pillBg: base.pillBg,
+                glow: base.glow
+            };
+        }
+
+        function sortedTierEntries(tiers) {
+            return Object.entries(tiers).sort((a, b) => {
+                const la = parseInt(a[1].replace(/\D/g, ''), 10);
+                const lb = parseInt(b[1].replace(/\D/g, ''), 10);
+                if (la !== lb) return la - lb;
+                const pa = a[1].startsWith('HT') ? 0 : 1;
+                const pb = b[1].startsWith('HT') ? 0 : 1;
+                return pa - pb;
+            });
+        }
+
         function getTierIconHtml(mode, tier, isProfile = false, delayIndex = 0) {
             const level = tier.replace(/\D/g, '');
+            const prefix = tier.startsWith('HT') ? 'HT' : 'LT';
+            const style = tierStyleFor(level, prefix);
             const delayStyle = `style="animation-delay: ${delayIndex * 45}ms;"`;
+            const wrapClass = isProfile ? 'tier-badge-wrap tier-badge-wrap-profile animate-tier-bar' : 'tier-badge-wrap animate-tier-bar';
             return `
-            <div class="tier-capsule t${level}-theme animate-tier-bar" ${delayStyle}>
-                <img src="${KIT_ICONS[mode]}" alt="${abbreviations[mode]}" class="w-6 h-6 object-contain mb-1 drop-shadow-md">
-                <span class="text-xs font-black mt-0.5 tracking-tight">${tier}</span>
-                ${isProfile ? `<span class="text-[8px] opacity-40 font-bold mt-1.5 text-center truncate w-full tracking-wider uppercase">${fullNames[mode]}</span>` : ''}
+            <div class="${wrapClass}" ${delayStyle}>
+                <div class="tier-badge-circle" style="border-color:${style.ring}; box-shadow:${style.glow};">
+                    <img src="${KIT_ICONS[mode]}" alt="${abbreviations[mode]}">
+                </div>
+                <div class="tier-badge-pill" style="background:${style.pillBg}; color:${style.text};">${tier}</div>
+                ${isProfile ? `<span class="tier-badge-name">${fullNames[mode]}</span>` : ''}
             </div>`;
         }
 
@@ -351,7 +417,7 @@
                 const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
                 if (rank > 3) cardRankTheme += ' hover:shadow-[0_25px_50px_-15px_rgba(59,130,246,0.2)]';
                 
-                let TiersHtml = Object.entries(p.tiers).map(([m, t], i) => getTierIconHtml(m, t, false, i)).join('');
+                let TiersHtml = sortedTierEntries(p.tiers).map(([m, t], i) => getTierIconHtml(m, t, false, i)).join('');
 
                 if (!TiersHtml) return;
 
@@ -424,14 +490,15 @@
                 const rowsHtml = rows.length ? rows.map((p, i) => {
                     const tierVal = p.tiers[mode];
                     const prefix = tierVal.startsWith('HT') ? 'HT' : 'LT';
+                    const borderColor = tierStyleFor(level, prefix).ring;
                     const rank = players.slice().sort((a, b) => b.computedPts - a.computedPts).findIndex(x => x.id === p.id) + 1;
                     return `
-                        <div class="tier-row ${prefix === 'HT' ? 'tier-row-ht' : 'tier-row-lt'} animate-tier-bar" style="animation-delay:${i * 30}ms" onclick="openTierProfile(${p.id}, ${rank})">
+                        <div class="tier-row animate-tier-bar" style="animation-delay:${i * 30}ms; border-left-color:${borderColor};" onclick="openTierProfile(${p.id}, ${rank})">
                             <img src="${p.pfp}" data-name="${p.name}" onerror="handleImgError(this)" class="w-8 h-8 rounded-xl object-cover bg-slate-900 border border-white/[0.08] flex-shrink-0">
                             <span class="text-[13px] font-bold text-white truncate flex-1">${p.name}</span>
                             ${arrowIndicator(prefix)}
                         </div>`;
-                }).join('') : `<div class="tier-empty">No players yet</div>`;
+                }).join('') : '';
 
                 grid.innerHTML += `
                     <div class="tier-col">
@@ -457,6 +524,12 @@
             }
         }
 
+        function playTabAnimation(el) {
+            el.classList.remove('tab-fade-in');
+            void el.offsetWidth; // force reflow to restart animation
+            el.classList.add('tab-fade-in');
+        }
+
         function filterBy(mode, el) {
             currentFilter = mode;
             document.querySelectorAll('.tab-item').forEach(t => {
@@ -472,16 +545,18 @@
                 overallWrapper.classList.remove('hidden');
                 tierGrid.classList.add('hidden');
                 tierGrid.classList.remove('flex');
+                playTabAnimation(overallWrapper);
             } else {
                 overallWrapper.classList.add('hidden');
                 tierGrid.classList.remove('hidden');
                 tierGrid.classList.add('flex');
+                playTabAnimation(tierGrid);
             }
             renderList();
         }
 
         function buildProfileMarkup(p, rank, rankPillColor, avatarBorder) {
-            const tiersDetail = Object.entries(p.tiers).map(([mode, tier], i) => getTierIconHtml(mode, tier, true, i)).join('');
+            const tiersDetail = sortedTierEntries(p.tiers).map(([mode, tier], i) => getTierIconHtml(mode, tier, true, i)).join('');
             return `
                 <div class="p-6 text-center border-b border-white/[0.04] bg-slate-950/20">
                     <div class="relative inline-block mt-2 mb-4" style="width: 88px; height: 88px;">
